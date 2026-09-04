@@ -84,6 +84,7 @@ export default function SubjectDetail() {
   const [chapterOpen, setChapterOpen] = useState(false);
   const [topicOpen, setTopicOpen] = useState(false);
   const [topicChapter, setTopicChapter] = useState<Doc<"chapters">["_id"] | null>(null);
+  const [topicKey, setTopicKey] = useState(0);
   const [taskDraft, setTaskDraft] = useState<{
     topicId: Doc<"topics">["_id"];
     topicName: string;
@@ -289,6 +290,7 @@ export default function SubjectDetail() {
                         onClick={() => {
                           setTopicChapter(chapter._id);
                           setTopicOpen(true);
+                          setTopicKey((k) => k + 1);
                         }}
                       >
                         <Plus className="size-3.5" /> Add topic
@@ -453,6 +455,7 @@ export default function SubjectDetail() {
       <ChapterDialog open={chapterOpen} onOpenChange={setChapterOpen} subjectId={subject._id} />
       {topicChapter && (
         <TopicDialog
+          key={`topic-${topicKey}`}
           open={topicOpen}
           onOpenChange={setTopicOpen}
           chapterId={topicChapter}

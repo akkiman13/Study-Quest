@@ -319,6 +319,7 @@ export function TopicDialog({
       (e.currentTarget as HTMLFormElement).reset();
       onOpenChange(false);
     } catch (err) {
+      console.error("Failed to create topic:", err);
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setBusy(false);
