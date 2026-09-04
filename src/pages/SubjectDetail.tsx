@@ -82,6 +82,7 @@ export default function SubjectDetail() {
   const setPinned = useMutation(api.study.setPinnedTask);
 
   const [chapterOpen, setChapterOpen] = useState(false);
+  const [chapterKey, setChapterKey] = useState(0);
   const [topicOpen, setTopicOpen] = useState(false);
   const [topicChapter, setTopicChapter] = useState<Doc<"chapters">["_id"] | null>(null);
   const [topicKey, setTopicKey] = useState(0);
@@ -90,6 +91,7 @@ export default function SubjectDetail() {
     topicName: string;
     presetStage?: string;
   } | null>(null);
+  const [taskKey, setTaskKey] = useState(0);
   const [editingTask, setEditingTask] = useState<Doc<"tasks"> | null>(null);
 
   const subject = useMemo(
@@ -156,7 +158,7 @@ export default function SubjectDetail() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button onClick={() => setChapterOpen(true)}>
+            <Button onClick={() => { setChapterOpen(true); setChapterKey((k) => k + 1); }}>
               <Plus className="size-4" /> Add chapter
             </Button>
             <ConfirmAction
@@ -374,12 +376,13 @@ export default function SubjectDetail() {
                                 </ConfirmAction>
                                 <Button
                                   size="sm"
-                                  onClick={() =>
+                                  onClick={() => {
+                                    setTaskKey((k) => k + 1);
                                     setTaskDraft({
                                       topicId: topic._id,
                                       topicName: topic.name,
-                                    })
-                                  }
+                                    });
+                                  }}
                                 >
                                   <Plus className="size-3.5" /> Add task
                                 </Button>
@@ -392,13 +395,14 @@ export default function SubjectDetail() {
                                 <button
                                   key={st.stage}
                                   type="button"
-                                  onClick={() =>
+                                  onClick={() => {
+                                    setTaskKey((k) => k + 1);
                                     setTaskDraft({
                                       topicId: topic._id,
                                       topicName: topic.name,
                                       presetStage: st.stage,
-                                    })
-                                  }
+                                    });
+                                  }}
                                   title={`${STAGE_META[st.stage].label} — ${STAGE_META[st.stage].hint} (click to add a task here)`}
                                 >
                                   <StagePill
@@ -452,7 +456,7 @@ export default function SubjectDetail() {
         </Accordion>
       )}
 
-      <ChapterDialog open={chapterOpen} onOpenChange={setChapterOpen} subjectId={subject._id} />
+      <ChapterDialog key={`chapter-${chapterKey}`} open={chapterOpen} onOpenChange={setChapterOpen} subjectId={subject._id} />
       {topicChapter && (
         <TopicDialog
           key={`topic-${topicKey}`}
@@ -463,7 +467,7 @@ export default function SubjectDetail() {
       )}
       {taskDraft && (
         <TaskDialog
-          key={`${taskDraft.topicId}-${taskDraft.presetStage ?? "any"}`}
+          key={`create-${taskDraft.topicId}-${taskKey}`}
           open={!!taskDraft}
           onOpenChange={(o) => !o && setTaskDraft(null)}
           topicId={taskDraft.topicId}
