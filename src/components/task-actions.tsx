@@ -152,7 +152,7 @@ export function CompleteTaskButton({
   thresholds: number[];
   totalBefore: number;
   variant?: "outline" | "secondary" | "default";
-  size?: "sm" | "default";
+  size?: "sm" | "default" | "lg";
   className?: string;
   onCompleted?: (res: CompleteResult) => void;
   compact?: boolean;

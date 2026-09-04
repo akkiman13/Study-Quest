@@ -645,6 +645,17 @@ export const resetProgress = mutation({
   },
 });
 
+/** Wipes every StudyQuest record (full reset). ensureInit re-seeds defaults on next load. */
+export const eraseAll = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const user = await getCurrentUser(ctx);
+    if (!user) throw new Error("Not signed in");
+    await wipeAll(ctx, user._id);
+    return true;
+  },
+});
+
 /** Nukes every StudyQuest table for this user (used by import + full reset). */
 async function wipeAll(ctx: MutationCtx, userId: Id<"users">) {
   const subjects = await ctx.db

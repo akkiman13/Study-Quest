@@ -26,7 +26,7 @@ import {
   XP_GOLD,
   tint,
 } from "@/lib/study";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -193,7 +193,7 @@ function SeedData() {
 }
 
 export default function AppShell() {
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const [theme] = useState(getTheme);
   useEffect(() => {
     applyTheme(theme);

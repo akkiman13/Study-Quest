@@ -34,6 +34,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
+import type { Id } from "@/convex/_generated/dataModel";
 import {
   DEFAULT_DIFFICULTY_BY_STAGE,
   DEFAULT_XP_BY_STAGE,
@@ -229,7 +230,7 @@ export function ChapterDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  subjectId: string;
+  subjectId: Id<"subjects">;
 }) {
   const create = useMutation(api.study.createChapter);
   const [busy, setBusy] = useState(false);
@@ -298,7 +299,7 @@ export function TopicDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  chapterId: string;
+  chapterId: Id<"chapters">;
 }) {
   const create = useMutation(api.study.createTopic);
   const [busy, setBusy] = useState(false);
@@ -370,7 +371,7 @@ export function TaskDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  topicId: string;
+  topicId: Id<"topics">;
   topicName?: string;
   existing?: Doc<"tasks">;
   presetStage?: string;
@@ -406,7 +407,7 @@ export function TaskDialog({
       name: String(fd.get("name") ?? ""),
       description: String(fd.get("description") ?? "") || undefined,
       stage: stage as StageKey,
-      difficulty,
+      difficulty: difficulty as "easy" | "medium" | "hard",
       xp,
     };
     try {
