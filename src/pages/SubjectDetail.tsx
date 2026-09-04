@@ -83,9 +83,9 @@ export default function SubjectDetail() {
 
   const [chapterOpen, setChapterOpen] = useState(false);
   const [topicOpen, setTopicOpen] = useState(false);
-  const [topicChapter, setTopicChapter] = useState<string | null>(null);
+  const [topicChapter, setTopicChapter] = useState<Doc<"chapters">["_id"] | null>(null);
   const [taskDraft, setTaskDraft] = useState<{
-    topicId: string;
+    topicId: Doc<"topics">["_id"];
     topicName: string;
     presetStage?: string;
   } | null>(null);
@@ -451,11 +451,13 @@ export default function SubjectDetail() {
       )}
 
       <ChapterDialog open={chapterOpen} onOpenChange={setChapterOpen} subjectId={subject._id} />
-      <TopicDialog
-        open={topicOpen}
-        onOpenChange={setTopicOpen}
-        chapterId={topicChapter ?? ""}
-      />
+      {topicChapter && (
+        <TopicDialog
+          open={topicOpen}
+          onOpenChange={setTopicOpen}
+          chapterId={topicChapter}
+        />
+      )}
       {taskDraft && (
         <TaskDialog
           key={`${taskDraft.topicId}-${taskDraft.presetStage ?? "any"}`}

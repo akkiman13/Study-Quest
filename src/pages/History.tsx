@@ -1,6 +1,6 @@
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-import { ArrowDownLeft, ArrowUpRight, History as HistoryIcon, RotateCcw } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CardShell, EmptyCard, PageHeader, XpBadge } from "@/components/study-ui";
+import { CardShell, EmptyCard, PageHeader } from "@/components/study-ui";
 import { UndoTaskButton } from "@/components/task-actions";
 import {
   dayKey,

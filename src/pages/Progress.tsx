@@ -34,7 +34,6 @@ import {
   stageIndex,
   STAGE_ORDER,
   sumLogs,
-  tint,
   XP_GOLD,
   type Everything,
 } from "@/lib/study";
@@ -406,6 +405,3 @@ function stageColor(stage: string): string {
           ? "#fb923c"
           : "#fb7185";
 }
-
-// silence unused tint import warning helper
-void tint;
